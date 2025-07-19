@@ -44,6 +44,11 @@ class CharacterRepositoryImpl(val context: Context): CharactersRepository {
                             type = it.type,
                             url = it.url
                         )
+                    roomDB.dao.getAllCharacters().forEach {    re ->
+                        if (it.id == re.id){
+                            roomDB.dao.delete(re)
+                        }
+                    }
                         roomDB.dao.insertCharacter(
                             character
                         )

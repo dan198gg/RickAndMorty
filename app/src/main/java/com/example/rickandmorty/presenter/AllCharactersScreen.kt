@@ -60,10 +60,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun AllCharacters(vm:MainViewModel, context: Context,
                   navHostController: NavHostController) {
+    val emptyStr = remember { mutableStateOf("") }
     val roundingDelta = 30.dp
     val heightLayout = LocalConfiguration.current.screenHeightDp
     var isRefreshing by remember { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()){
+        if (vm.snapList.isEmpty()) emptyStr.value = "Empty"
+        else emptyStr.value = ""
+        Text(emptyStr.value, fontSize = 40.sp, modifier = Modifier.align(Alignment.Center))
+
     Column {
         Row (Modifier.height((heightLayout/10).dp), verticalAlignment = Alignment.CenterVertically){
             TextField(
@@ -155,8 +160,7 @@ fun AllCharacters(vm:MainViewModel, context: Context,
                                             .align(Alignment.BottomEnd)
                                             .clip(
                                                 RoundedCornerShape(
-                                                    topStart = 20.dp,
-                                                    bottomEnd = 20.dp
+                                                    topStart = 20.dp
                                                 )
                                             )
                                             .background(
