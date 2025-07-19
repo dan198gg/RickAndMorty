@@ -3,6 +3,7 @@ package com.example.rickandmorty.presenter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -64,13 +65,16 @@ fun AllCharacters(vm:MainViewModel, context: Context,
     val roundingDelta = 30.dp
     val heightLayout = LocalConfiguration.current.screenHeightDp
     var isRefreshing by remember { mutableStateOf(false) }
+    BackHandler {
+    }
     Box(Modifier.fillMaxSize()){
         if (vm.snapList.isEmpty()) emptyStr.value = "Empty"
         else emptyStr.value = ""
         Text(emptyStr.value, fontSize = 40.sp, modifier = Modifier.align(Alignment.Center))
-
     Column {
-        Row (Modifier.height((heightLayout/10).dp), verticalAlignment = Alignment.CenterVertically){
+        Row (Modifier
+            .padding(top = 10.dp)
+            .height((heightLayout / 10).dp), verticalAlignment = Alignment.CenterVertically){
             TextField(
                 value = vm.textFilter.value,
                 onValueChange = {
@@ -144,8 +148,8 @@ fun AllCharacters(vm:MainViewModel, context: Context,
                             vm.current = it
                             navHostController.navigate(ScreensMain.CharacterDetailsScreen.route)
                         }, modifier = Modifier
-                                .padding(15.dp)
-                                .height((heightLayout / 3).dp),
+                            .padding(15.dp)
+                            .height((heightLayout / 3).dp),
                             colors = CardDefaults.cardColors(containerColor = Color.Gray)
                         ) {
                             Column {
@@ -240,7 +244,9 @@ fun AllCharacters(vm:MainViewModel, context: Context,
             }
             vm.alltypes = vm.alltypes.distinct().toMutableList()
             navHostController.navigate(ScreensMain.FilterScreen.route)
-        }, modifier = Modifier.align(Alignment.BottomEnd).padding(bottom = 10.dp, end = 10.dp)) {
+        }, modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(bottom = 10.dp, end = 10.dp)) {
             Icon(Icons.Default.Settings, "")
         }
     }
