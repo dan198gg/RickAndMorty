@@ -15,8 +15,7 @@ fun NavController(vm: MainViewModel, context: Context) {
         }
 
         composable(ScreensMain.FilterScreen.route) {
-            FilterScreen(vm.gender, vm.location, vm.name, vm.status,
-                vm.type, vm.alltypes, vm.snapList, navController, vm.totalPages)
+            FilterScreen(vm, navController)
 
         }
 
